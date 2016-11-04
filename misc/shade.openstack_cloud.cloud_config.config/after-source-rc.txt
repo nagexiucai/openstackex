@@ -1,0 +1,37 @@
+auth_type : password
+compute_api_version : 2
+orchestration_api_version : 1
+database_api_version : 1.0
+metering_api_version : 2
+network_api_version : 2
+message : 
+image_format : qcow2
+networks : []
+image_api_version : 2
+verify : True
+dns_api_version : 2
+object_store_api_version : 1
+status : active
+region_name : 
+api_timeout : None
+baremetal_api_version : 1
+auth : {
+'username': 'admin', 
+'project_name': 'admin', 
+'user_domain_id': 'default', 
+'auth_url': 'http://192.168.10.254:35357/v3', 
+'password': 'WorkHappy888', 
+'project_domain_id': 'default'
+}
+image_api_use_tasks : False
+floating_ip_source : neutron
+key : None
+cacert : None
+key_manager_api_version : v1
+identity_api_version : 3
+volume_api_version : 2
+cert : None
+secgroup_source : neutron
+container_api_version : 1
+interface : public
+disable_vendor_agent : {}
