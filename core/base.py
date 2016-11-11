@@ -2,7 +2,8 @@
 #coding=utf-8
 
 class Base(object):
-    
+    def __init__(self, *args, **kws):
+        super(Base, self).__init__()
     def create(self, *args, **kws):
         raise
     def update(self, *args, **kws):

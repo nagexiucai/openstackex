@@ -18,7 +18,7 @@ class OpenstackSDK(Base): #todo: design is not so good
     def __init__(self, *args, **kws):
         super(OpenstackSDK, self).__init__(*args, **kws)
         self.__region = kws.get('region', 'RegionOne')
-        self.__auth_url = kws.get('auth', 'http://keystone:5000/v3')
+        self.__auth_url = kws.get('auth', 'http://do-not-exist:5000/v3')
         self.__project_name = kws.get('project_name', 'admin')
         self.__username = kws.get('username', 'admin')
         self.__password = kws.get('password', 'admin')
@@ -35,7 +35,7 @@ class OpenstackSDK(Base): #todo: design is not so good
             user_agent = self.__user_agent
             )
     def update(self, action, *args):
-        OpenstackSDK.ACTIONS.get(action)(self.__connect, *args)
+        return OpenstackSDK.ACTIONS.get(action)(self.__connect, *args)
 
 @OpenstackSDK.action_register
 def make_keypair(openstack, *args):
@@ -45,6 +45,10 @@ def make_keypair(openstack, *args):
     with file(FS.join_path(ssh_key_folder, keypair_name), 'w') as private_key:
         private_key.write('%s' % keypair.private_key)
     return keypair
+
+@OpenstackSDK.action_register
+def list_images(openstack, *args):
+    return openstack.compute.images()
 
 @OpenstackSDK.action_register
 def launch_vm(openstack, *args): #todo: just apply to floating-ip
@@ -77,5 +81,10 @@ def make_flavor(openstack, *args):
 
 
 if __name__ == '__main__':
-    for k,v in OpenstackSDK.ACTIONS.iteritems():
-        print k,v
+#     for k,v in OpenstackSDK.ACTIONS.iteritems():
+#         print k,v
+    CONFIG = {'auth_url': 'http://192.168.10.190:5000', 'project_name': 'admin', 'username': 'admin', 'password': '1abf3c7c0ff241ea'}
+    cloud = connection.Connection(**CONFIG)
+    cloud.authorize()
+    #todo: there error exists, maybe need profile to configure openstack connection
+    images = [image for image in cloud.compute.images()]

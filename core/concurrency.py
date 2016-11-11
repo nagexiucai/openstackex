@@ -3,21 +3,19 @@
 
 import eventlet
 
-if __name__ == "__main__":
+def coroutine(func, *things):
+    pool = eventlet.GreenPool() #size=1000 by default
+
+def simple(count, func, *args):
     import multiprocessing
-    import time
-
-    def func(msg):
-        print "msg:", msg
-        time.sleep(3)
-        print "end."
-
-    pool = multiprocessing.Pool(processes = 50)
-    for i in xrange(50):
-        msg = "hi %d." %(i)
-        pool.apply_async(func, (msg, ))
-
-    print "!!!Mark~ Mark~ Mark!!!"
+    pool = multiprocessing.Pool(processes = count)
+    results = [pool.apply_async(func, args) for _ in xrange(count)]
     pool.close()
     pool.join()
-    print "Sub-process(es) done."
+    return results
+
+def test(x, y): #notice: must defined out of __main__
+    print x + y
+
+if __name__ == "__main__":
+    simple(50, test, 9527, 9527)
