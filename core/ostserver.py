@@ -7,6 +7,9 @@ from core.log import Log
 import socket
 import threading
 import atexit
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 class Command(Base): #todo: for extending
     DBS = {
@@ -54,7 +57,7 @@ class Listener(Base): #todo: support tcp as well
         self.__skt = socket.socket(*args)
         self.__cmd = Command()
     def create(self):
-        host = (socket.gethostbyname(socket.gethostname()))
+        host = socket.gethostbyname(socket.gethostname())
         Log._(host, Log.ORDINARY)
         self.__skt.bind((host, Listener.PORT))
         self.__cmd.create()

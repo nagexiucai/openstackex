@@ -20,11 +20,5 @@ if __name__ == '__main__':
     cloud = Cloud()
     cloud.create()
     vm = VM(cloud.backend)
-    vm.create(name='rose', image=IMAGE, flavor=FLAVOR, network='bobnet', wait=True, timeout=300)
-
-#todo: what is next?
-##disable selinux
-##modify sshd port to 3389 and ssh authorize(pubkey & password, root allowed)
-##isolate test tenant(project)
-##using environment variables as configuration for openstack
-#todo: why virsh console failed for vm launched by openstack using same image with kvm correctly?
+    vm.create(name='rose-a', image=IMAGE, flavor=FLAVOR, network='bobnet', wait=True, timeout=300)
+    vm.remove('rose-a', wait=True)
