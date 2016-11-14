@@ -4,12 +4,12 @@
 from core.base import Base
 from core.dbwrapper import MiniDBMS
 from core.log import Log
+from core.fs import FS
 import socket
 import threading
 import atexit
 import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(FS.inner_root())
 
 class Command(Base): #todo: for extending
     DBS = {
@@ -77,5 +77,5 @@ class Listener(Base): #todo: support tcp as well
 
 if __name__ == '__main__':
     server = Listener(*Listener.UDP)
-    server.start()
     atexit.register(server.stop)
+    server.start()

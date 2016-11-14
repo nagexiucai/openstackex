@@ -6,7 +6,7 @@ import traceback
 from pprint import pprint
 
 class Log(Base):
-    LEVEL = 9527 #below this level will be printed
+    LEVEL = 1 #below this level will be printed
     FATAL = 0
     SERIOUS = 1
     ORDINARY = 2

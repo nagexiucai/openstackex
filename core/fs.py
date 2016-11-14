@@ -20,6 +20,9 @@ class FS(Base):
     @staticmethod
     def mkdirs(path, mode=0777):
         mkdir(path, mode)
+    @staticmethod
+    def inner_root():
+        return path.dirname(path.dirname(__file__))
     def __init__(self, *args, **kws):
         super(FS, self).__init__()
     

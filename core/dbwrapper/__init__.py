@@ -3,6 +3,7 @@
 
 from core.base import Base
 from core.log import Log
+from core.fs import FS
 import sqlite3
 
 class MiniDBMS(Base):
@@ -34,33 +35,39 @@ class MiniDBMS(Base):
         return placeholder
     def __init__(self, *args, **kws):
         super(MiniDBMS, self).__init__(*args, **kws)
-        self.__driver = sqlite3.connect(':memory:', check_same_thread=False) #todo: ephemeral means
+        self.__driver = sqlite3.connect(FS.join_path(FS.inner_root(), 'db'), check_same_thread=False) #todo: ephemeral means
         self.__cursor = self.__driver.cursor()
         self.__log = None #todo: operating logs
     def create(self, table, fields, types):
         sql = MiniDBMS.CREATE % (table, MiniDBMS.sql_structure_generator(fields, types))
-        self._commit()
         Log._(sql, Log.ORDINARY)
-        return self._execute(sql)
+        state = self._execute(sql)
+        self._commit()
+        return state
     def update(self, table, fields, data):
         sql = MiniDBMS.UPDATE % (table, MiniDBMS.sql_assignment_generator(fields, data))
-        self._commit()
         Log._(sql, Log.ORDINARY)
-        return self._execute(sql)
+        state = self._execute(sql)
+        self._commit()
+        return state
     def insert(self, table, data):
         sql = MiniDBMS.INSERT % (table, MiniDBMS.sql_placeholder_generator(max([len(d) for d in data])))
-        self._commit()
         Log._(sql, Log.ORDINARY)
-        return self._batch_execute(sql, data)
+        state = self._batch_execute(sql, data)
+        self._commit()
+        return state
     def destroy(self, *args, **kws):
         self.__cursor.close()
         self.__driver.close()
     def show(self, table): #todo: so crude
         self._execute(MiniDBMS.SELECT % ('*', table))
-        Log.beauty(self.__cursor.fetchall())
+        data = self.__cursor.fetchall()
+        Log.beauty(data)
+        return data
     def _execute(self, sql):
         state = True
         try:
+            Log._(sql, Log.VORBOSE)
             self.__cursor.execute(sql)
         except: #todo: refined
             state = False
@@ -70,7 +77,7 @@ class MiniDBMS(Base):
             pass
         return state
     def _batch_execute(self, sql, data):
-        self.__cursor.executemany(sql, data)
+        return self.__cursor.executemany(sql, data)
     def _commit(self):
         self.__driver.commit()
 
