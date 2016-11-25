@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #coding=utf-8
+#by nagexiucai
 
 from core.base import Base
 from core.log import Log

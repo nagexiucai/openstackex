@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #coding=utf-8
+#by nagexiucai
 
 # virt-edit -d $domain $file
 # then skip to vi(m) or other editors configured as default

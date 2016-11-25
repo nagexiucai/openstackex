@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #coding=utf-8
+#by nagexiucai
 #todo: run as soon as OS ready
 #todo: configurable
 #todo: time difference between host and vm

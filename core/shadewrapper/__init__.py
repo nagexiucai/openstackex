@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #coding=utf-8
+#by nagexiucai
 
 #how to make the image?
 ##disable selinux
