@@ -4,7 +4,7 @@
 
 from core.ostsnitcher import Reporter
 
-#todo: need run 2 times continuously to ensure ostserver going to die correctly
+#todo: need run twice continuously to ensure ostserver going to die correctly
 #      because ostserver using blocked method 'recvfrom'
 #      the go flag had been clear when get exit at the first time
 #      but the main thread is still blocked by 'recvfrom'
