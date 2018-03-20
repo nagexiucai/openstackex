@@ -37,7 +37,7 @@ g.add_drive_opts(IMAGE, readonly=False)
 g.launch()
 g.inspect_os()
 ROOT = g.inspect_get_roots() #['/dev/sda3']
-g.inspect_get_montpoints(ROOT[0]) #{'/boot': '/dev/sda1', '/': '/dev/sda3'}
+g.inspect_get_mountpoints(ROOT[0]) #{'/boot': '/dev/sda1', '/': '/dev/sda3'}
 g.inspect_get_filesystems(ROOT[0]) #['/dev/sda3', '/dev/sda1', '/dev/sda2']
 g.mount(ROOT[0], '/')
 g.upload(LOCAL, REMOTE)
